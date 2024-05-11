@@ -15,10 +15,11 @@ import torch.optim as optim
 from torch.autograd import Variable
 import time
 from KL_PMVAE import KL_PMVAE_2omics, KL_PMVAE_genes, KL_PMVAE_mirnas
+import sys
+sys.path.append('..')
 from utils import bce_recon_loss, kl_divergence
 
 dtype = torch.FloatTensor
-
 
 # In[ ]:
 

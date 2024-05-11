@@ -15,6 +15,8 @@ import torch.optim as optim
 from torch.autograd import Variable
 import time
 from KL_PMVAE import KL_PMVAE_2omics, KL_PMVAE_genes, KL_PMVAE_mirnas
+import sys
+sys.path.append('..')
 from utils import sort_data, load_data, load_pathway, bce_recon_loss, kl_divergence, get_match_id
 from train_KL_PMVAE import train_KL_PMVAE
 
@@ -37,19 +39,20 @@ CUTTING_RATIO = [0.3, 0.5, 0.7, 0.9]
 Initial_Learning_Rate = [0.1, 0.05, 0.005, 0.001]
 L2_Lambda = [0.1, 0.05, 0.005, 0.0005]
 
-patient_id_train, x_train_gene, ytime_train, yevent_train, age_train, stage_i_train, stage_ii_train, race_white_train = load_data("tune/minmax_normalized/data_train_gene_minmax_tune.csv", dtype)
-patient_id_valid, x_valid_gene, ytime_valid, yevent_valid, age_valid, stage_i_valid, stage_ii_valid, race_white_valid = load_data("tune/minmax_normalized/data_valid_gene_minmax_tune.csv", dtype)
-pathway_mask_tune = load_pathway("tune/minmax_normalized/pathway_mask.csv", dtype)
+data_path = '../../processed_data_example/TCGA_BRCA/'
+patient_id_train, x_train_gene, ytime_train, yevent_train, age_train, stage_i_train, stage_ii_train, race_white_train = load_data(data_path+"tune/minmax_normalized/data_train_gene_minmax_tune.csv", dtype)
+patient_id_valid, x_valid_gene, ytime_valid, yevent_valid, age_valid, stage_i_valid, stage_ii_valid, race_white_valid = load_data(data_path+"tune/minmax_normalized/data_valid_gene_minmax_tune.csv", dtype)
+pathway_mask_tune = load_pathway(data_path+"tune/minmax_normalized/pathway_mask.csv", dtype)
 
-_, x_train_mirna, _, _, _, _, _, _ = load_data("tune/minmax_normalized/data_train_mirna_minmax_tune.csv", dtype)
-_, x_valid_mirna, _, _, _, _, _, _ = load_data("tune/minmax_normalized/data_valid_mirna_minmax_tune.csv", dtype)
+_, x_train_mirna, _, _, _, _, _, _ = load_data(data_path+"tune/minmax_normalized/data_train_mirna_minmax_tune.csv", dtype)
+_, x_valid_mirna, _, _, _, _, _, _ = load_data(data_path+"tune/minmax_normalized/data_valid_mirna_minmax_tune.csv", dtype)
 
-patient_id_train_overall, x_train_gene_overall, ytime_train_overall, yevent_train_overall, age_train_overall, stage_i_train_overall, stage_ii_train_overall, race_white_train_overall = load_data("train_test_split/minmax_normalized/data_train_gene_minmax_overall.csv", dtype)
-patient_id_test_overall, x_test_gene_overall, ytime_test_overall, yevent_test_overall, age_test_overall, stage_i_test_overall, stage_ii_test_overall, race_white_test_overall = load_data("train_test_split/minmax_normalized/data_test_gene_minmax_overall.csv", dtype)
-pathway_mask_test = load_pathway("train_test_split/minmax_normalized/pathway_mask.csv", dtype)
+patient_id_train_overall, x_train_gene_overall, ytime_train_overall, yevent_train_overall, age_train_overall, stage_i_train_overall, stage_ii_train_overall, race_white_train_overall = load_data(data_path+"train_test_split/minmax_normalized/data_train_gene_minmax_overall.csv", dtype)
+patient_id_test_overall, x_test_gene_overall, ytime_test_overall, yevent_test_overall, age_test_overall, stage_i_test_overall, stage_ii_test_overall, race_white_test_overall = load_data(data_path+"train_test_split/minmax_normalized/data_test_gene_minmax_overall.csv", dtype)
+pathway_mask_test = load_pathway(data_path+"train_test_split/minmax_normalized/pathway_mask.csv", dtype)
 
-_, x_train_mirna_overall, _, _, _, _, _, _ = load_data("train_test_split/minmax_normalized/data_train_mirna_minmax_overall.csv", dtype)
-_, x_test_mirna_overall, _, _, _, _, _, _ = load_data("train_test_split/minmax_normalized/data_test_mirna_minmax_overall.csv", dtype)
+_, x_train_mirna_overall, _, _, _, _, _, _ = load_data(data_path+"train_test_split/minmax_normalized/data_train_mirna_minmax_overall.csv", dtype)
+_, x_test_mirna_overall, _, _, _, _, _, _ = load_data(data_path+"train_test_split/minmax_normalized/data_test_mirna_minmax_overall.csv", dtype)
 
 opt_l2 = 0.
 opt_lr = 0.

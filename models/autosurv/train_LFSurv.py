@@ -16,6 +16,8 @@ import time
 import lifelines
 from lifelines.utils import concordance_index
 from LFSurv import LFSurv
+import sys
+sys.path.append('..')
 from utils import R_set, neg_par_log_likelihood, c_index, EarlyStopping
 
 dtype = torch.FloatTensor

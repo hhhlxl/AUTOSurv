@@ -85,6 +85,7 @@ def load_pathway(path, dtype):
 Loss function for KL-PMVAE
 """
 
+# 这个损失的是用于什么来着
 def bce_recon_loss(recon_x, x):
     batch_size = x.size(0)
     assert batch_size != 0

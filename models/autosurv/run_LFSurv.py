@@ -16,6 +16,8 @@ import time
 import lifelines
 from lifelines.utils import concordance_index
 from LFSurv import LFSurv
+import sys
+sys.path.append('..')
 from utils import sort_data, load_data, R_set, neg_par_log_likelihood, c_index, EarlyStopping
 from train_LFSurv import train_LFSurv
 
